@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const analyticsRoutes = require('./config/routes/analyticsRoutes');
+const analyticsRoutes = require('./routes/analyticsRoutes');
 require('dotenv').config();
 
 const app = express();
