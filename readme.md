@@ -47,13 +47,11 @@ jwero-analytics/
 1. Navigate to the backend folder: `cd backend`.
 2. Install dependencies: `npm install`.
 3. Create a `.env` file and add your credentials:
-```env
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_password
 DB_NAME=jwero_db
-
-
+4. Start the backend server: `node index.js` .
 ```
 
 
