@@ -108,9 +108,3 @@ All APIs support dynamic date filtering via query parameters.
 
 ---
 
-### How to use this file:
-
-1. Create a new file in your main project folder called `README.md`.
-2. Copy the text above and paste it inside.
-3. Replace the bracketed text (like `[Your Name]`) with your actual information.
-
