@@ -1,4 +1,4 @@
-
+![Analytics Dashboard with Revenue Charts](frontend/ui.png)
 
 # 📄 Jwero Analytics Dashboard
 
