@@ -13,9 +13,13 @@ function App() {
     categories: [],
     topProducts: []
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadAllData = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const [rev, sales, cats, prods] = await Promise.all([
           api.fetchRevenue(dates.start, dates.end),
@@ -32,6 +36,9 @@ function App() {
         });
       } catch (err) {
         console.error("Dashboard Load Error:", err);
+        setError(err.response?.data?.error || err.message || "Failed to load data. Make sure the backend server is running on port 4000.");
+      } finally {
+        setLoading(false);
       }
     };
     loadAllData();
@@ -52,6 +59,37 @@ function App() {
   const formatCurrency = (value) => {
     return `₹${parseFloat(value || 0).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
   };
+
+  if (loading) {
+    return (
+      <div className="dashboard-wrapper">
+        <div style={{ textAlign: 'center', padding: '4rem', color: '#6b6b6b' }}>
+          <h2>Loading dashboard data...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="dashboard-wrapper">
+        <div style={{ 
+          background: '#fee2e2', 
+          border: '1px solid #fca5a5', 
+          borderRadius: '12px', 
+          padding: '2rem', 
+          margin: '2rem 0',
+          color: '#991b1b'
+        }}>
+          <h3 style={{ marginTop: 0 }}>Connection Error</h3>
+          <p>{error}</p>
+          <p style={{ fontSize: '0.9rem', marginTop: '1rem' }}>
+            Please ensure the backend server is running: <code>cd backend && npm start</code>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-wrapper">

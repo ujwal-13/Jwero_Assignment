@@ -2,7 +2,7 @@ const pool = require('../config/database');
 
 exports.getTotalRevenue = async (req, res) => {
     try {
-        const { startDate, endDate } = req.query; 
+        const { startDate, endDate } = req.query; // e.g., 2026-01-01
         
         // Logic for "Last Month" (approx 30 days back)
         const lastMonthStart = `DATE_SUB('${startDate}', INTERVAL 1 MONTH)`;
@@ -36,11 +36,7 @@ exports.getCategoryRevenue = async (req, res) => {
 
 exports.getTopProducts = async (req, res) => {
     try {
-       
-        const startDate = req.query.startDate || '2026-01-01'; 
-        const endDate = req.query.endDate || '2026-01-31'
         const [rows] = await pool.query(
-
             "SELECT product_name, SUM(quantity) as total_qty FROM orders GROUP BY product_name ORDER BY total_qty DESC LIMIT 5"
         );
         res.json(rows);
@@ -49,7 +45,9 @@ exports.getTopProducts = async (req, res) => {
 
 exports.getDailySales = async (req, res) => {
     try {
-        const { startDate, endDate } = req.query;
+
+        const startDate = req.query.startDate || '2026-01-01'; 
+        const endDate = req.query.endDate || '2026-01-31';
         const [rows] = await pool.query(
             "SELECT order_date, SUM(price * quantity) as revenue FROM orders WHERE order_date BETWEEN ? AND ? GROUP BY order_date ORDER BY order_date ASC",
             [startDate, endDate]

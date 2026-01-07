@@ -1,1 +1,0 @@
-learn about sql data connection with nodejs
